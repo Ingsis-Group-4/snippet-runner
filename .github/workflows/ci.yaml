@@ -7,6 +7,9 @@
 
 name: Java CI with Gradle
 
+permissions:
+  packages: read
+
 on:
   push:
     branches: [ "main" ]
