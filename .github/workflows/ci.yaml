@@ -7,8 +7,6 @@
 
 name: Java CI with Gradle
 
-permissions:
-  packages: read
 
 on:
   push:
@@ -22,6 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      packages: read
 
     steps:
       - uses: actions/checkout@v4
