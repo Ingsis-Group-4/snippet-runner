@@ -39,6 +39,7 @@ out/
 ### Kotlin ###
 .kotlin
 
-### Env ###
+#Enviroment Variables
 .env
 gradle.properties
+
