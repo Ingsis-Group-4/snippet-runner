@@ -21,8 +21,8 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
-          username: ${{ env.user }}
-          password: ${{ env.password }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push to GitHub Packages
         id: docker_build
@@ -31,6 +31,3 @@ jobs:
           push: true
           tags: |
             ghcr.io/Ingsis-Group-4/snippet-runner-dev:${{ steps.short-sha.outputs.sha }}
-    env:
-      user = ${{ secrets.GITHUB_ACTOR }}
-      password = ${{ secrets.GITHUB_TOKEN }}
