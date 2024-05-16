@@ -31,7 +31,10 @@ jobs:
           push: true
           tags: |
             ghcr.io/ingsis-group-4/snippet-runner-dev:${{ steps.short-sha.outputs.sha }}
-
+          
+          build-args: |
+            ACTOR=${{ github.repository_owner }}
+            TOKEN=${{ secrets.GITHUB_TOKEN }}
     env:
       GITHUB_ACTOR: ${{ github.repository_owner }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
