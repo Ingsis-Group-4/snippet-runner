@@ -33,5 +33,5 @@ jobs:
             ghcr.io/ingsis-group-4/snippet-runner-dev:${{ steps.short-sha.outputs.sha }}
           
           build-args: |
-            ACTOR=${{ github.actor }}
+            ACTOR=${{ github.repository_owner }}
             TOKEN=${{ secrets.GITHUB_TOKEN }}
