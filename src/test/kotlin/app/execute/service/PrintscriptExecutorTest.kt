@@ -13,6 +13,7 @@ class PrintscriptExecutorTest {
     private val inputBase = "src/test/resources/app/execute/input"
     private val expectedBase = "src/test/resources/app/execute/expected"
     private val formatConfigFilePath = "src/test/resources/app/execute/config/format.config.json"
+    private val lintConfigFilePath = "src/test/resources/app/execute/config/lint.config.json"
 
     @Test
     fun `001 Interpret with empty InputStream`() {
@@ -90,5 +91,17 @@ class PrintscriptExecutorTest {
         val input = File("$inputBase/007.ps").readText()
 
         assertThrows<SnippetParsingException> { executor.format(input, config) }
+    }
+
+    @Test
+    fun `008 lint file with valid snippet and one rule failure should return report`() {
+        val config = File(lintConfigFilePath).readText()
+        val input = File("$inputBase/008.ps").readText()
+
+        val result = executor.lint(input, config)
+
+        Assertions.assertFalse(result.isSuccess)
+        Assertions.assertEquals(1, result.failures.size)
+        Assertions.assertEquals("Variable 'a_var' does not follow naming rule at (line: 1, column: 5)", result.failures[0])
     }
 }

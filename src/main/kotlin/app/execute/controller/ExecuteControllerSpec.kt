@@ -1,7 +1,9 @@
 package app.execute.controller
 
 import app.execute.model.SnippetFormatInput
+import app.execute.model.SnippetLintInput
 import app.execute.service.ExecuteOutput
+import app.execute.service.LintOutput
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
@@ -44,4 +46,28 @@ interface ExecuteControllerSpec {
         ],
     )
     fun formatSnippet(snippetFormatInput: SnippetFormatInput): String
+
+    @PostMapping("/lint")
+    @Operation(
+        summary = "Lint a code snippet",
+        requestBody = RequestBody(content = [Content(schema = Schema(implementation = SnippetLintInput::class))]),
+        responses = [
+            ApiResponse(
+                responseCode = "200",
+                description =
+                    """
+The result of the linting. 
+It includes a boolean variable `isSuccess` that tells whether the linting threw any errors.
+If `isSuccess` is `false`, a list of failures will have the description of what failed.
+                """,
+                content = [Content(schema = Schema(implementation = LintOutput::class))],
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "Snippet parsing failed, meaning provided snippet was not valid",
+                content = [Content(schema = Schema(implementation = String::class))],
+            ),
+        ],
+    )
+    fun lintSnippet(snippetLintInput: SnippetLintInput): LintOutput
 }

@@ -1,7 +1,9 @@
 package app.execute.controller
 
 import app.execute.model.SnippetFormatInput
+import app.execute.model.SnippetLintInput
 import app.execute.service.ExecuteOutput
+import app.execute.service.LintOutput
 import app.execute.service.PrintScriptExecutor
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
@@ -20,5 +22,11 @@ class ExecuteController
             @RequestBody snippetFormatInput: SnippetFormatInput,
         ): String {
             return printScriptExecutor.format(snippetFormatInput.snippet, snippetFormatInput.ruleConfig)
+        }
+
+        override fun lintSnippet(
+            @RequestBody snippetLintInput: SnippetLintInput,
+        ): LintOutput {
+            return printScriptExecutor.lint(snippetLintInput.snippet, snippetLintInput.ruleConfig)
         }
     }

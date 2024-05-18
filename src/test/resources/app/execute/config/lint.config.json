@@ -1,0 +1,4 @@
+{
+  "variableNamingRule" : "^[a-z]+(?:[A-Z][a-z]*)*$",
+  "printLnArgumentNonExpressionRule" : true
+}

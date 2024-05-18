@@ -50,6 +50,7 @@ dependencies {
 	implementation 'printscript:utils:0.1.1'
 	implementation 'printscript:runner:0.1.1'
 	implementation 'printscript:formatter:0.1.1'
+	implementation 'printscript:sca:0.1.1'
 
 	implementation "org.springdoc:springdoc-openapi-starter-webmvc-api:2.5.0"
 	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0"
