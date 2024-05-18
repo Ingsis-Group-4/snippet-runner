@@ -49,6 +49,9 @@ dependencies {
 	implementation 'printscript:lexer:0.0.2-SNAPSHOT'
 	implementation 'printscript:utils:0.0.2-SNAPSHOT'
 	implementation 'printscript:runner:0.0.2-SNAPSHOT'
+
+	implementation "org.springdoc:springdoc-openapi-starter-webmvc-api:2.5.0"
+	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0"
 }
 
 tasks.register("checkLint", JavaExec) {

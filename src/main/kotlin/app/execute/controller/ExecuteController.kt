@@ -1,22 +1,15 @@
 package app.execute.controller
 
-import app.execute.model.StringProgramInputDTO
 import app.execute.service.ExecuteOutput
 import app.execute.service.PrintScriptExecutor
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
+import jakarta.servlet.http.HttpServletRequest
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/execute")
-class ExecuteController {
+class ExecuteController : ExecuteControllerSpec {
     val printScriptExecutor = PrintScriptExecutor()
 
-    @PostMapping("/string")
-    private fun executeString(
-        @RequestBody body: StringProgramInputDTO,
-    ): ExecuteOutput {
-        return printScriptExecutor.execute(body.snippet.byteInputStream())
+    override fun executeString(request: HttpServletRequest): ExecuteOutput {
+        return printScriptExecutor.execute(request.inputStream)
     }
 }
