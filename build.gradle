@@ -43,12 +43,13 @@ dependencies {
 			attribute(Bundling.BUNDLING_ATTRIBUTE, getObjects().named(Bundling, Bundling.EXTERNAL))
 		}
 	}
-	implementation 'printscript:common:0.0.2-SNAPSHOT'
-	implementation 'printscript:interpreter:0.0.2-SNAPSHOT'
-	implementation 'printscript:parser:0.0.2-SNAPSHOT'
-	implementation 'printscript:lexer:0.0.2-SNAPSHOT'
-	implementation 'printscript:utils:0.0.2-SNAPSHOT'
-	implementation 'printscript:runner:0.0.2-SNAPSHOT'
+	implementation 'printscript:common:0.1.1'
+	implementation 'printscript:interpreter:0.1.1'
+	implementation 'printscript:parser:0.1.1'
+	implementation 'printscript:lexer:0.1.1'
+	implementation 'printscript:utils:0.1.1'
+	implementation 'printscript:runner:0.1.1'
+	implementation 'printscript:formatter:0.1.1'
 
 	implementation "org.springdoc:springdoc-openapi-starter-webmvc-api:2.5.0"
 	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0"

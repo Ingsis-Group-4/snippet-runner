@@ -1,0 +1,6 @@
+{
+  "hasSpaceBetweenColon": true,
+  "hasSpaceBetweenEqualSign": true,
+  "lineBreakBeforePrintLn": 2,
+  "ifBlockIndent": 2
+}
