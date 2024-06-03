@@ -37,3 +37,13 @@ jobs:
           build-args: |
             ACTOR=${{ github.repository_owner }}
             TOKEN=${{ secrets.GITHUB_TOKEN }}
+      - name: Update server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEV_URL }}
+          username: "snippet-searcher-admin"
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd snippet-infra
+            docker compose -f docker-compose.dev.yml stop snippet-runner
+            docker compose -f docker-compose.dev.yml up snippet-runner -d --build
