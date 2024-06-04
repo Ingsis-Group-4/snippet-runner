@@ -27,10 +27,7 @@ class OAuth2ResourceServerSecurityConfiguration(
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http.authorizeHttpRequests {
             it
-                .requestMatchers("/").permitAll()
-                .requestMatchers(POST, "/format").hasAuthority("SCOPE_write:snippets")
-                .requestMatchers(POST, "/interpret").hasAuthority("SCOPE_write:snippets")
-                .requestMatchers(POST, "/lint").hasAuthority("SCOPE_write:snippets")
+                .requestMatchers(POST, "/execute/*").hasAuthority("SCOPE_write:snippets")
                 .anyRequest().authenticated()
         }
             .oauth2ResourceServer { it.jwt(withDefaults()) }
