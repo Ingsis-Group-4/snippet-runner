@@ -13,9 +13,9 @@ import jakarta.servlet.http.HttpServletRequest
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 
-@RequestMapping("/execute")
+@RequestMapping("execute")
 interface ExecuteControllerSpec {
-    @PostMapping("/interpret")
+    @PostMapping("interpret")
     @Operation(
         summary = "Run a code snippet file",
         requestBody = RequestBody(content = [Content(schema = Schema(implementation = String::class))]),
@@ -28,7 +28,7 @@ interface ExecuteControllerSpec {
     )
     fun interpretSnippet(request: HttpServletRequest): ExecuteOutput
 
-    @PostMapping("/format")
+    @PostMapping("format")
     @Operation(
         summary = "Format a code snippet",
         description = "Formats a code snippet. Code snippet must be a valid one. Format configuration must be provided",
@@ -47,7 +47,7 @@ interface ExecuteControllerSpec {
     )
     fun formatSnippet(snippetFormatInput: SnippetFormatInput): String
 
-    @PostMapping("/lint")
+    @PostMapping("lint")
     @Operation(
         summary = "Lint a code snippet",
         requestBody = RequestBody(content = [Content(schema = Schema(implementation = SnippetLintInput::class))]),
