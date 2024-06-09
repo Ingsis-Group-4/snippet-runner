@@ -5,3 +5,12 @@ springdoc:
   api-docs:
     enabled: true
     path: "/docs"
+
+redis:
+  host: ${REDIS_HOST}
+  port: ${REDIS_PORT}
+  stream:
+    request_lint_key: ${REDIS_STREAM_REQUEST_LINT_KEY}
+    result_lint_key: ${REDIS_STREAM_RESULT_LINT_KEY}
+  groups:
+    lint: ${REDIS_STREAM_GROUP_LINT}
