@@ -2,7 +2,6 @@ package app.execute.service
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
@@ -86,11 +85,12 @@ class PrintscriptExecutorTest {
     }
 
     @Test
-    fun `007 Format file with invalid snippet should fail`() {
+    fun `007 Format file with invalid snippet should return error message`() {
         val config = File(formatConfigFilePath).readText()
         val input = File("$inputBase/007.ps").readText()
 
-        assertThrows<SnippetParsingException> { executor.format(input, config) }
+        val result = executor.format(input, config)
+        Assertions.assertTrue(result.contains("Error: Invalid snippet could not be formatted"))
     }
 
     @Test
