@@ -5,6 +5,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY}
+        NEW_RELIC_APP_NAME: ${NEW_RELIC_APP_NAME}
+    environment:
+      NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY}
+      NEW_RELIC_APP_NAME: ${NEW_RELIC_APP_NAME}
+    env_file:
+      - .env
     ports:
       - "8080:8080"
     expose:
