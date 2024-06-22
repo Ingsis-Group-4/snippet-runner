@@ -54,9 +54,13 @@ class PrintScriptExecutor {
     ): String {
         val formatter = ProgramNodeFormatter()
 
-        val formattedSnippet =
-            formatter.format(getAST(snippet), FormattingRule(config), FormatterMapFactory().createFormatterMap())
-        return formattedSnippet
+        try {
+            val formattedSnippet =
+                formatter.format(getAST(snippet), FormattingRule(config), FormatterMapFactory().createFormatterMap())
+            return formattedSnippet
+        } catch (e: Exception) {
+            return "$snippet\n\n Error: Invalid snippet could not be formatted"
+        }
     }
 
     fun lint(
