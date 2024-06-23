@@ -15,7 +15,7 @@ class LintResultProducer
         redis: RedisTemplate<String, String>,
     ) : RedisStreamProducer(streamKey, redis) {
         suspend fun publishEvent(event: LintResultEvent) {
-            println("Publishing event: $event")
+            println("Publishing event: LintResultEvent(userId: ${event.userId}, snippetKey: ${event.snippetKey}, status: ${event.status}")
             emit(event)
         }
     }
