@@ -54,14 +54,14 @@ dependencies {
 			attribute(Bundling.BUNDLING_ATTRIBUTE, getObjects().named(Bundling, Bundling.EXTERNAL))
 		}
 	}
-	implementation 'printscript:common:0.1.1'
-	implementation 'printscript:interpreter:0.1.1'
-	implementation 'printscript:parser:0.1.1'
-	implementation 'printscript:lexer:0.1.1'
-	implementation 'printscript:utils:0.1.1'
-	implementation 'printscript:runner:0.1.1'
-	implementation 'printscript:formatter:0.1.1'
-	implementation 'printscript:sca:0.1.1'
+	implementation 'printscript:common:0.1.2'
+	implementation 'printscript:interpreter:0.1.2'
+	implementation 'printscript:parser:0.1.2'
+	implementation 'printscript:lexer:0.1.2'
+	implementation 'printscript:utils:0.1.2'
+	implementation 'printscript:runner:0.1.2'
+	implementation 'printscript:formatter:0.1.2'
+	implementation 'printscript:sca:0.1.2'
 	implementation("org.springframework.boot:spring-boot-starter-data-redis")
 	implementation("spring-mvc-redis-streams:lib:0.0.2-SNAPSHOT")
 

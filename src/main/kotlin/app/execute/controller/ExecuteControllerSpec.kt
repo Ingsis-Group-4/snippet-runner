@@ -1,6 +1,7 @@
 package app.execute.controller
 
 import app.execute.model.SnippetFormatInput
+import app.execute.model.SnippetInterpretInput
 import app.execute.model.SnippetLintInput
 import app.execute.service.ExecuteOutput
 import app.execute.service.LintOutput
@@ -9,7 +10,6 @@ import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.parameters.RequestBody
 import io.swagger.v3.oas.annotations.responses.ApiResponse
-import jakarta.servlet.http.HttpServletRequest
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 
@@ -18,7 +18,6 @@ interface ExecuteControllerSpec {
     @PostMapping("interpret")
     @Operation(
         summary = "Run a code snippet file",
-        requestBody = RequestBody(content = [Content(schema = Schema(implementation = String::class))]),
         responses = [
             ApiResponse(
                 responseCode = "200",
@@ -26,7 +25,7 @@ interface ExecuteControllerSpec {
             ),
         ],
     )
-    fun interpretSnippet(request: HttpServletRequest): ExecuteOutput
+    fun interpretSnippet(snippetInterpretInput: SnippetInterpretInput): ExecuteOutput
 
     @PostMapping("format")
     @Operation(
