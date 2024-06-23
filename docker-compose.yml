@@ -15,7 +15,19 @@ services:
       - .env
     ports:
       - "8080:8080"
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_STREAM_REQUEST_LINT_KEY: request_lint
+      REDIS_STREAM_RESULT_LINT_KEY: result_lint
+      REDIS_STREAM_GROUP_LINT: lint_group
     expose:
       - 8080
     volumes:
       - .:/app/data
+
+  redis:
+    container_name: "redis"
+    image: redis:6-alpine
+    ports:
+      - "6379:6379"
