@@ -16,7 +16,7 @@ class PrintscriptExecutorTest {
 
     @Test
     fun `001 Interpret with empty InputStream`() {
-        val result = executor.interpret(InputStream.nullInputStream())
+        val result = executor.interpret(InputStream.nullInputStream(), listOf(), listOf())
 
         Assertions.assertEquals(0, result.errors.size)
         Assertions.assertEquals(0, result.outputs.size)
@@ -27,7 +27,7 @@ class PrintscriptExecutorTest {
         val inputFile = File("$inputBase/002.ps")
         val input = FileInputStream(inputFile)
 
-        val result = executor.interpret(input)
+        val result = executor.interpret(input, listOf(), listOf())
 
         Assertions.assertEquals(0, result.errors.size)
         Assertions.assertEquals(1, result.outputs.size)
@@ -39,7 +39,7 @@ class PrintscriptExecutorTest {
         val inputFile = File("$inputBase/003.ps")
         val input = FileInputStream(inputFile)
 
-        val result = executor.interpret(input)
+        val result = executor.interpret(input, listOf(), listOf())
 
         Assertions.assertEquals(1, result.errors.size)
         Assertions.assertEquals(0, result.outputs.size)
@@ -50,7 +50,7 @@ class PrintscriptExecutorTest {
         val inputFile = File("$inputBase/004.ps")
         val input = FileInputStream(inputFile)
 
-        val result = executor.interpret(input, listOf("Input"))
+        val result = executor.interpret(input, listOf("Input"), listOf())
 
         Assertions.assertEquals(0, result.errors.size)
         Assertions.assertEquals(2, result.outputs.size)
@@ -63,7 +63,7 @@ class PrintscriptExecutorTest {
         val inputFile = File("$inputBase/005.ps")
         val input = FileInputStream(inputFile)
 
-        val result = executor.interpret(input, listOf("Input1", "Input2"))
+        val result = executor.interpret(input, listOf("Input1", "Input2"), listOf())
 
         Assertions.assertEquals(0, result.errors.size)
         Assertions.assertEquals(4, result.outputs.size)
