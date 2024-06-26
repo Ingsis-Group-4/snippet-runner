@@ -1,11 +1,13 @@
 package app.execute.service
 
+import app.execute.model.EnvVar
 import ast.AST
 import formatter.ProgramNodeFormatter
 import formatter.factory.FormatterMapFactory
 import formatter.rule.FormattingRule
 import interpreter.StatementInterpreter
 import interpreter.factory.getInterpreterMap
+import interpreter.readEnvFunction.EnvMapFunction
 import lexer.Lexer
 import lexer.getTokenMap
 import org.slf4j.LoggerFactory
@@ -29,13 +31,15 @@ class PrintScriptExecutor {
 
     fun interpret(
         snippet: InputStream,
-        inputs: List<String> = listOf(),
+        inputs: List<String>,
+        envs: List<EnvVar>,
     ): ExecuteOutput {
         logger.info("Received request to interpret snippet")
         val printScriptRunner = Runner()
         val errorLogger = CollectorLogger()
         val outputLogger = CollectorLogger()
         val inputProvider = ListInputProvider(inputs)
+        val envProvider = EnvMapFunction(toMap(envs))
 
         logger.info("Running snippet")
         printScriptRunner.run(
@@ -45,12 +49,21 @@ class PrintScriptExecutor {
             errorLogger = errorLogger,
             readInputFunction = inputProvider,
             logger = outputLogger,
+            readEnvFunction = envProvider,
         )
         logger.info("Snippet execution complete, returning output")
         return ExecuteOutput(
             outputs = outputLogger.getLogs(),
             errors = errorLogger.getLogs(),
         )
+    }
+
+    private fun toMap(envs: List<EnvVar>): Map<String, String> {
+        val result = mutableMapOf<String, String>()
+        for (env in envs) {
+            result[env.key] = env.value
+        }
+        return result
     }
 
     fun format(
