@@ -5,6 +5,7 @@ import app.execute.service.SnippetParsingException
 import app.integration.asset.RemoteAssetStore
 import app.redis.producer.LintResultProducer
 import kotlinx.coroutines.runBlocking
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.redis.connection.stream.ObjectRecord
@@ -31,11 +32,16 @@ class LintRequestConsumer
             subscription()
         }
 
+        private val logger = LoggerFactory.getLogger(LintRequestConsumer::class.java)
+
         override fun onMessage(record: ObjectRecord<String, LintRequestEvent>) {
+            logger.info("Received record: ${record.value}")
             println("Received record: ${record.value}")
 
             val eventPayload = record.value
+            logger.info("Getting snippet content from bucket")
             val content = remoteAssetStore.getSnippet(eventPayload.snippetKey)
+            logger.info("Successfully retrieved snippet from bucket")
 
             try {
                 val result = executor.lint(content, eventPayload.ruleConfig)
@@ -45,10 +51,12 @@ class LintRequestConsumer
                     producer.publishEvent(LintResultEvent(eventPayload.userId, eventPayload.snippetKey, resultEventStatus))
                 }
             } catch (exception: SnippetParsingException) {
+                logger.info("Failed to parse snippet content")
                 runBlocking {
                     producer.publishEvent(LintResultEvent(eventPayload.userId, eventPayload.snippetKey, LintStatus.FAILED))
                 }
             } finally {
+                logger.info("Finished processing record: ${record.value}")
                 println("Finished processing record: ${record.value}")
             }
         }
