@@ -82,9 +82,12 @@ class PrintScriptExecutor {
     ): LintOutput {
         val linter = StaticCodeAnalyzer(DefaultSCARuleFactory().getRules(config))
 
-        val analysis = linter.analyze(getAST(snippet))
-
-        return toLintOutput(analysis)
+        try {
+            val analysis = linter.analyze(getAST(snippet))
+            return toLintOutput(analysis)
+        } catch (exception: Exception) {
+            return LintOutput(false, listOf("Could not parse snippet"))
+        }
     }
 
     private fun getAST(snippet: String): AST {
