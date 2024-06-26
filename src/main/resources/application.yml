@@ -28,3 +28,8 @@ redis:
     result_lint_key: ${REDIS_STREAM_RESULT_LINT_KEY}
   groups:
     lint: ${REDIS_STREAM_GROUP_LINT}
+
+asset:
+  service:
+    url:
+      {$AZURITE_BUCKET_URL_V1:http://localhost:8081/v1/asset/snippet}
