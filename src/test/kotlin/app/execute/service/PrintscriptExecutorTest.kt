@@ -2,7 +2,6 @@ package app.execute.service
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
@@ -17,7 +16,7 @@ class PrintscriptExecutorTest {
 
     @Test
     fun `001 Interpret with empty InputStream`() {
-        val result = executor.interpret(InputStream.nullInputStream())
+        val result = executor.interpret(InputStream.nullInputStream(), listOf(), listOf())
 
         Assertions.assertEquals(0, result.errors.size)
         Assertions.assertEquals(0, result.outputs.size)
@@ -28,7 +27,7 @@ class PrintscriptExecutorTest {
         val inputFile = File("$inputBase/002.ps")
         val input = FileInputStream(inputFile)
 
-        val result = executor.interpret(input)
+        val result = executor.interpret(input, listOf(), listOf())
 
         Assertions.assertEquals(0, result.errors.size)
         Assertions.assertEquals(1, result.outputs.size)
@@ -40,7 +39,7 @@ class PrintscriptExecutorTest {
         val inputFile = File("$inputBase/003.ps")
         val input = FileInputStream(inputFile)
 
-        val result = executor.interpret(input)
+        val result = executor.interpret(input, listOf(), listOf())
 
         Assertions.assertEquals(1, result.errors.size)
         Assertions.assertEquals(0, result.outputs.size)
@@ -51,7 +50,7 @@ class PrintscriptExecutorTest {
         val inputFile = File("$inputBase/004.ps")
         val input = FileInputStream(inputFile)
 
-        val result = executor.interpret(input, listOf("Input"))
+        val result = executor.interpret(input, listOf("Input"), listOf())
 
         Assertions.assertEquals(0, result.errors.size)
         Assertions.assertEquals(2, result.outputs.size)
@@ -64,7 +63,7 @@ class PrintscriptExecutorTest {
         val inputFile = File("$inputBase/005.ps")
         val input = FileInputStream(inputFile)
 
-        val result = executor.interpret(input, listOf("Input1", "Input2"))
+        val result = executor.interpret(input, listOf("Input1", "Input2"), listOf())
 
         Assertions.assertEquals(0, result.errors.size)
         Assertions.assertEquals(4, result.outputs.size)
@@ -86,11 +85,12 @@ class PrintscriptExecutorTest {
     }
 
     @Test
-    fun `007 Format file with invalid snippet should fail`() {
+    fun `007 Format file with invalid snippet should return error message`() {
         val config = File(formatConfigFilePath).readText()
         val input = File("$inputBase/007.ps").readText()
 
-        assertThrows<SnippetParsingException> { executor.format(input, config) }
+        val result = executor.format(input, config)
+        Assertions.assertTrue(result.contains("Error: Invalid snippet could not be formatted"))
     }
 
     @Test

@@ -36,3 +36,17 @@ jobs:
           build-args: |
             ACTOR=${{ github.repository_owner }}
             TOKEN=${{ secrets.GITHUB_TOKEN }}
+            NEW_RELIC_LICENSE_KEY=${{ secrets.NEW_RELIC_LICENSE_KEY }}
+            NEW_RELIC_APP_NAME=${{ secrets.NEW_RELIC_APP_NAME_PROD }}
+
+      - name: Update server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.PROD_URL }}
+          username: "snippet-searcher-admin"
+          key: ${{ secrets.SSH_PRIVATE_KEY_PROD }}
+          script: |
+            cd snippet-infra
+            docker compose -f docker-compose.prod.yml stop snippet-runner
+            docker compose -f docker-compose.prod.yml pull snippet-runner
+            docker compose -f docker-compose.prod.yml up snippet-runner -d --build

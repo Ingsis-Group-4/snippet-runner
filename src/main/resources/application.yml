@@ -5,3 +5,36 @@ springdoc:
   api-docs:
     enabled: true
     path: "/docs"
+
+auth0:
+  audience: https://snippet-manager
+
+spring:
+  application:
+    name: "snippet-runner"
+  data:
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: ${REDIS_PORT:6379}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://dev-rwvojcsa8mzfij2d.us.auth0.com/
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+server:
+  port: 8080
+
+
+redis:
+  stream:
+    request_lint_key: ${REDIS_STREAM_REQUEST_LINT_KEY:request_lint}
+    result_lint_key: ${REDIS_STREAM_RESULT_LINT_KEY:result_lint}
+  groups:
+    lint: ${REDIS_STREAM_GROUP_LINT:lint_group}
+
+asset:
+  service:
+    url: ${AZURITE_BUCKET_URL_V1:http://asset_service:8080/v1/asset/snippet}
+
