@@ -92,10 +92,12 @@ class PrintScriptExecutor {
         logger.info("Received request to lint snippet")
         val linter = StaticCodeAnalyzer(DefaultSCARuleFactory().getRules(config))
 
-        logger.info("Linting snippet")
-        val analysis = linter.analyze(getAST(snippet))
-        logger.info("Snippet linted successfully")
-        return toLintOutput(analysis)
+        try {
+            val analysis = linter.analyze(getAST(snippet))
+            return toLintOutput(analysis)
+        } catch (exception: Exception) {
+            return LintOutput(false, listOf("Could not parse snippet"))
+        }
     }
 
     private fun getAST(snippet: String): AST {
