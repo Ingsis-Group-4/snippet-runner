@@ -31,5 +31,5 @@ redis:
 
 asset:
   service:
-    url:
-      {$AZURITE_BUCKET_URL_V1:http://localhost:8081/v1/asset/snippet}
+    url: ${AZURITE_BUCKET_URL_V1:http://localhost:8081/v1/asset/snippet}
+
