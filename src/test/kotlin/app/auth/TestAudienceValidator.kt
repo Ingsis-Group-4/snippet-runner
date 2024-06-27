@@ -6,7 +6,6 @@ import org.springframework.security.oauth2.jwt.Jwt
 import java.time.Instant
 
 class TestAudienceValidator {
-
     private val audience = "expected-audience"
     private val audienceValidator = AudienceValidator(audience)
 

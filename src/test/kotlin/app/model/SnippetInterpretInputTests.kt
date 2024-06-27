@@ -5,7 +5,6 @@ import app.execute.model.SnippetInterpretInput
 import org.junit.jupiter.api.Test
 
 class SnippetInterpretInputTests {
-
     @Test
     fun `testing SnippetInterpretInput`() {
         val envVars = listOf(EnvVar("key", "value"))

@@ -16,15 +16,15 @@ import org.springframework.web.client.RestTemplate
 @ExtendWith(SpringExtension::class)
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-class RemoteAssetServiceTest @Autowired constructor(
-    private val restTemplate: RestTemplate,
-){
+class RemoteAssetServiceTest
+    @Autowired
+    constructor(
+        private val restTemplate: RestTemplate,
+    ) {
 
-
-    @Test
-    fun `test remote asset service`() {
-        val remoteAssetStore = RemoteAssetStore(restTemplate, "http://localhost:8080")
-        assertThrows<Exception> { remoteAssetStore.getSnippet("snippetKey") }
+        @Test
+        fun `test remote asset service`() {
+            val remoteAssetStore = RemoteAssetStore(restTemplate, "http://localhost:8080")
+            assertThrows<Exception> { remoteAssetStore.getSnippet("snippetKey") }
+        }
     }
-
-}

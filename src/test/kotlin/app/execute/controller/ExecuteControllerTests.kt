@@ -39,18 +39,19 @@ class ExecuteControllerTests {
     private val lintConfigFilePath = "src/test/resources/app/execute/config/lint.config.json"
     private val inputBase = "src/test/resources/app/execute/input"
 
-
     @Test
     fun `001 _ test interpret`() {
-        val snippetInterpretInput = SnippetInterpretInput(
-            content = "print('Hello, World!')",
-            inputs = emptyList(),
-            envs = emptyList(),
-        )
+        val snippetInterpretInput =
+            SnippetInterpretInput(
+                content = "print('Hello, World!')",
+                inputs = emptyList(),
+                envs = emptyList(),
+            )
         // Setup
-        val requestBody = objectMapper.writeValueAsString(
-            snippetInterpretInput
-        )
+        val requestBody =
+            objectMapper.writeValueAsString(
+                snippetInterpretInput,
+            )
 
         // Action
         mockMvc.perform(
@@ -63,48 +64,52 @@ class ExecuteControllerTests {
 
     @Test
     fun `002 _ test controller`() {
-        val snippetInterpretInput = SnippetInterpretInput(
-            content = "println('Hello, World!');",
-            inputs = emptyList(),
-            envs = emptyList(),
-        )
+        val snippetInterpretInput =
+            SnippetInterpretInput(
+                content = "println('Hello, World!');",
+                inputs = emptyList(),
+                envs = emptyList(),
+            )
         val output = executeController.interpretSnippet(snippetInterpretInput)
         Assertions.assertEquals(listOf("Hello, World!"), output.outputs)
         Assertions.assertEquals(emptyList<String>(), output.errors)
     }
 
     @Test
-    fun `003 _ format`(){
+    fun `003 _ format`()  {
         val config = File(formatConfigFilePath).readText()
         val input = File("$inputBase/006.ps").readText()
     }
 
     @Test
     fun `004 _ test formatSnippet with valid input`() {
-        val snippetFormatInput = SnippetFormatInput(
-            snippet = "let a: number = 1;",
-            ruleConfig = File(formatConfigFilePath).readText()
-        )
+        val snippetFormatInput =
+            SnippetFormatInput(
+                snippet = "let a: number = 1;",
+                ruleConfig = File(formatConfigFilePath).readText(),
+            )
         val output = executeController.formatSnippet(snippetFormatInput)
         Assertions.assertEquals("let a : number = 1;", output)
     }
 
     @Test
     fun `005 _ test lintSnippet with valid input`() {
-        val snippetLintInput = SnippetLintInput(
-            snippet = "let a: number =1;",
-            ruleConfig = File(lintConfigFilePath).readText()
-        )
+        val snippetLintInput =
+            SnippetLintInput(
+                snippet = "let a: number =1;",
+                ruleConfig = File(lintConfigFilePath).readText(),
+            )
         val output = executeController.lintSnippet(snippetLintInput)
         Assertions.assertTrue(output.failures.isEmpty())
     }
 
     @Test
     fun `006 _ test lintSnippet with invalid input`() {
-        val snippetLintInput = SnippetLintInput(
-            snippet = "a: number =1;",
-            ruleConfig = File(lintConfigFilePath).readText()
-        )
+        val snippetLintInput =
+            SnippetLintInput(
+                snippet = "a: number =1;",
+                ruleConfig = File(lintConfigFilePath).readText(),
+            )
         val output = executeController.lintSnippet(snippetLintInput)
         Assertions.assertFalse(output.failures.isEmpty())
     }

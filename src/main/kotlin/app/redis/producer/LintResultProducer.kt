@@ -10,18 +10,18 @@ import spring.mvc.redis.streams.RedisStreamProducer
 
 @Component
 class LintResultProducer
-@Autowired
-constructor(
-    @Value("\${redis.stream.result_lint_key}") streamKey: String,
-    redis: RedisTemplate<String, String>,
-) : RedisStreamProducer(streamKey, redis) {
-    private val logger = LoggerFactory.getLogger(LintResultProducer::class.java)
+    @Autowired
+    constructor(
+        @Value("\${redis.stream.result_lint_key}") streamKey: String,
+        redis: RedisTemplate<String, String>,
+    ) : RedisStreamProducer(streamKey, redis) {
+        private val logger = LoggerFactory.getLogger(LintResultProducer::class.java)
 
-    suspend fun publishEvent(event: LintResultEvent) {
-        logger.info(
-            "Publishing event: LintResultEvent(userId: ${event.userId}, snippetKey: ${event.snippetKey}, status: ${event.status}",
-        )
-        println("Publishing event: LintResultEvent(userId: ${event.userId}, snippetKey: ${event.snippetKey}, status: ${event.status}")
-        emit(event)
+        suspend fun publishEvent(event: LintResultEvent) {
+            logger.info(
+                "Publishing event: LintResultEvent(userId: ${event.userId}, snippetKey: ${event.snippetKey}, status: ${event.status}",
+            )
+            println("Publishing event: LintResultEvent(userId: ${event.userId}, snippetKey: ${event.snippetKey}, status: ${event.status}")
+            emit(event)
+        }
     }
-}
