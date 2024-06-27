@@ -1,0 +1,38 @@
+redis:
+  stream:
+    request_lint_key: test
+    result_lint_key: test
+  groups:
+    lint: test
+
+spring:
+  profiles:
+    active: test
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      jedis:
+        pool:
+          enabled: false
+        lettuce:
+          pool:
+            enabled: false
+        repositories:
+          enabled: false
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://dev-rwvojcsa8mzfij2d.us.auth0.com/
+
+auth0:
+  audience: test
+# streamKeys to be used by producers
+stream:
+  key: "mystream"
+
+# groupIds to be used by consumers
+groups:
+  product: "productcreated"
