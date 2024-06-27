@@ -76,7 +76,7 @@ class ExecuteControllerTests {
     }
 
     @Test
-    fun `003 _ format`()  {
+    fun `003 _ format`() {
         val config = File(formatConfigFilePath).readText()
         val input = File("$inputBase/006.ps").readText()
     }

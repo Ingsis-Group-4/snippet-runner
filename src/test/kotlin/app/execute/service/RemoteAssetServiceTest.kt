@@ -21,7 +21,6 @@ class RemoteAssetServiceTest
     constructor(
         private val restTemplate: RestTemplate,
     ) {
-
         @Test
         fun `test remote asset service`() {
             val remoteAssetStore = RemoteAssetStore(restTemplate, "http://localhost:8080")

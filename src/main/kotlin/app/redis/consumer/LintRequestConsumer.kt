@@ -8,7 +8,6 @@ import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.context.annotation.Profile
 import org.springframework.data.redis.connection.stream.ObjectRecord
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.data.redis.stream.StreamReceiver
@@ -19,7 +18,6 @@ import spring.mvc.redis.events.LintStatus
 import spring.mvc.redis.streams.RedisStreamConsumer
 
 @Component
-@Profile("!test")
 class LintRequestConsumer
     @Autowired
     constructor(
