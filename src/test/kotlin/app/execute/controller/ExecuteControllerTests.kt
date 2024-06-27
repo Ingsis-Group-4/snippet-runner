@@ -59,7 +59,7 @@ class ExecuteControllerTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer ${TestSecurityConfig.AUTH0_TOKEN}")
                 .content(requestBody),
-        ).andExpect(status().is4xxClientError)
+        ).andExpect(status().is2xxSuccessful)
     }
 
     @Test
