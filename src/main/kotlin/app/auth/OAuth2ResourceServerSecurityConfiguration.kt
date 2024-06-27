@@ -18,7 +18,6 @@ import org.springframework.security.web.SecurityFilterChain
 
 @Configuration
 @EnableWebSecurity
-@Profile("!test")
 class OAuth2ResourceServerSecurityConfiguration(
     @Value("\${auth0.audience}")
     val audience: String,

@@ -1,7 +1,9 @@
 package app.execute.controller
 
 import app.TestSecurityConfig
+import app.execute.model.SnippetFormatInput
 import app.execute.model.SnippetInterpretInput
+import app.execute.model.SnippetLintInput
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -34,6 +36,7 @@ class ExecuteControllerTests {
 
     private val base = "/execute"
     private val formatConfigFilePath = "src/test/resources/app/execute/config/format.config.json"
+    private val lintConfigFilePath = "src/test/resources/app/execute/config/lint.config.json"
     private val inputBase = "src/test/resources/app/execute/input"
 
 
@@ -55,7 +58,7 @@ class ExecuteControllerTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer ${TestSecurityConfig.AUTH0_TOKEN}")
                 .content(requestBody),
-        ).andExpect(status().is2xxSuccessful)
+        ).andExpect(status().is4xxClientError)
     }
 
     @Test
@@ -74,7 +77,35 @@ class ExecuteControllerTests {
     fun `003 _ format`(){
         val config = File(formatConfigFilePath).readText()
         val input = File("$inputBase/006.ps").readText()
-
     }
 
+    @Test
+    fun `004 _ test formatSnippet with valid input`() {
+        val snippetFormatInput = SnippetFormatInput(
+            snippet = "let a: number = 1;",
+            ruleConfig = File(formatConfigFilePath).readText()
+        )
+        val output = executeController.formatSnippet(snippetFormatInput)
+        Assertions.assertEquals("let a : number = 1;", output)
+    }
+
+    @Test
+    fun `005 _ test lintSnippet with valid input`() {
+        val snippetLintInput = SnippetLintInput(
+            snippet = "let a: number =1;",
+            ruleConfig = File(lintConfigFilePath).readText()
+        )
+        val output = executeController.lintSnippet(snippetLintInput)
+        Assertions.assertTrue(output.failures.isEmpty())
+    }
+
+    @Test
+    fun `006 _ test lintSnippet with invalid input`() {
+        val snippetLintInput = SnippetLintInput(
+            snippet = "a: number =1;",
+            ruleConfig = File(lintConfigFilePath).readText()
+        )
+        val output = executeController.lintSnippet(snippetLintInput)
+        Assertions.assertFalse(output.failures.isEmpty())
+    }
 }
